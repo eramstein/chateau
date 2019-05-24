@@ -9,12 +9,11 @@ export interface Time {
 const SEASON_DURATION = 30;
 const SEASON_COUNT = 4;
 
-export function updateTime(time : Time): Time {
+export function updateTime(time: Time): Time {
 
     // 1 time tick = 1 minute
     let minute = time.minute + 1;
     let { hour, day, season, year } = time;
-
 
     if (minute > 59) {
         minute = 0;
@@ -35,12 +34,12 @@ export function updateTime(time : Time): Time {
         season = 1;
         year++;
     }
-        
+
     return {
         year,
         season,
         day,
         hour,
         minute,
-    }
+    };
 }

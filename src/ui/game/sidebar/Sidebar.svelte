@@ -10,6 +10,8 @@
     .top-menu {
         display: flex;
         padding-left: 20px;
+        padding-top: 5px;
+        padding-bottom: 10px;
     }
     .top-menu div {
         padding-right: 20px;
@@ -20,14 +22,10 @@
     .block {
         padding-top: 10px;
         padding-bottom: 10px;
-        margin-top: 10px;
-        margin-bottom: 10px;
         border-top: 1px solid #ccc;
-        border-bottom: 1px solid #ccc;
         padding-left: 20px;
     }
     .details {
-        padding-left: 20px;
     }
 </style>
 
@@ -56,7 +54,7 @@
         {/each}
     </div>
     {/if}
-    <div class="details">
+    <div class="block details">
         {#if ui.openScreen === "WORLD"}
             { game.world.name }
         {/if}

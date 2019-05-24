@@ -27,54 +27,54 @@ const REGION_SIZE = 5;
 const PLACE_SIZE = 5;
 
 export function createWorld(): World {
-    const world : World = {
+    const world: World = {
         name: "Le nouveau monde",
         regions: [],
-    }
-    
+    };
+
     for (let index = 0; index < WORLD_SIZE; index++) {
         const newRegion = createRegion(world);
         world.regions.push(newRegion);
     }
 
-    return world
+    return world;
 }
 
-export function createRegion(world : World): Region {
-    const region : Region = {
+export function createRegion(world: World): Region {
+    const region: Region = {
         name: "Région " + (world.regions.length + 1),
         description: "bla bla bla",
         places: [],
-    }
+    };
 
     for (let index = 0; index < REGION_SIZE; index++) {
         const newPlace = createPlace(region);
         region.places.push(newPlace);
     }
-    
-    return region
+
+    return region;
 }
 
-export function createPlace(region : Region): Place {
-    const place : Place = {
+export function createPlace(region: Region): Place {
+    const place: Place = {
         name: "Endroit " + (region.places.length + 1),
         description: "bla bla bla",
         zones: [],
-    }
+    };
 
     for (let index = 0; index < PLACE_SIZE; index++) {
         const newZone = createZone(place);
         place.zones.push(newZone);
     }
-    
-    return place
+
+    return place;
 }
 
-export function createZone(place : Place): Zone {
-    const zone : Zone = {
+export function createZone(place: Place): Zone {
+    const zone: Zone = {
         name: "La Zone " + (place.zones.length + 1),
         description: "bla bla bla",
-    }
-    
-    return zone
+    };
+
+    return zone;
 }
