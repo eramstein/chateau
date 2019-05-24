@@ -17,7 +17,6 @@
     .right-panel {
         width: 20%;
         padding-top: 5px;
-        padding-left: 10px;
     }
 </style>
 
@@ -27,7 +26,7 @@
             <World world={$State.game.world} />
         {/if}
         {#if $State.ui.openScreen === "REGION"}
-            <Region region={$State.game.world.regions[0]} />
+            <Region region={$State.game.world.regions.filter(r => r.name === $State.ui.screenParameters.region)[0]} />
         {/if}
     </div>
     <div class="right-panel">

@@ -26,7 +26,7 @@ const WORLD_SIZE = 5;
 const REGION_SIZE = 5;
 const PLACE_SIZE = 5;
 
-export function createWorld(gs: GameState): GameState {
+export function createWorld(): World {
     const world : World = {
         name: "Le nouveau monde",
         regions: [],
@@ -37,8 +37,7 @@ export function createWorld(gs: GameState): GameState {
         world.regions.push(newRegion);
     }
 
-    gs.world = world
-    return gs
+    return world
 }
 
 export function createRegion(world : World): Region {

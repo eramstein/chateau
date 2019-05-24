@@ -25,7 +25,7 @@
 
 <div class="world">
     {#each world.regions as region (region.name) }
-        <div class="region" on:click={ () => State.openRegion(0) }>
+        <div class="region" on:click={ () => State.openRegion(region.name) }>
             <div class="region-name">{ region.name }</div>
             <div>{ region.description }</div>
         </div>
