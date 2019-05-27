@@ -1,10 +1,10 @@
-import { Character, getInitialCharacters } from "./characters";
+import { Character, setInitialCharacters } from "./characters";
 import { Time, updateTime } from "./time";
 import { createWorld, World } from "./world";
 
 export interface GameState {
     world: World;
-    characters: Character[];
+    characters: { [key: string] : Character };
     time: Time;
 }
 
@@ -18,7 +18,7 @@ export function nextGameState(gameState: GameState): GameState {
 export function initGameState(): GameState {
     const gameState: GameState = {
         world: null,
-        characters: [],
+        characters: {},
         time: {
             year: 1,
             season: 1,
@@ -27,9 +27,9 @@ export function initGameState(): GameState {
             minute: 0,
         },
     };
-
-    gameState.characters = getInitialCharacters();
+    
     gameState.world = createWorld();
+    setInitialCharacters(gameState);
 
     return gameState;
 }

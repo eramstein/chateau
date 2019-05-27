@@ -65,6 +65,7 @@ function createFullState() {
 
         // Gameplay actions
         // addZone: zoneID => update(gs => spawnZone(gs, zoneID)),
+        tempTest: () => update(s => { s.game.world.regions["Chateau"].places["Endroit 1"].zones["La Zone 1"].description = "CHANGED"; return s; }),
     };
 }
 
@@ -95,9 +96,17 @@ export function saveState() {
     localStorage.setItem("castleSavedGame", JSON.stringify(savedData));
 }
 
+export function printState() {
+    console.log(get(State));
+}
+
 export function resetState() {
     State.initialize();
     saveState();
+}
+
+export function tempTest() {
+    State.tempTest();
 }
 
 window.onbeforeunload = () => {

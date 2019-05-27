@@ -2,6 +2,8 @@
     import Place from './Place.svelte';
 
     export let region;
+    
+    const places = Object.values(region.places);
 </script>
 
 <style>
@@ -15,7 +17,7 @@
 </style>
 
 <div>
-    {#each region.places as place (place.name) }
+    {#each places as place (place.name) }
         <div class="place">
             <Place place={place} />
         </div>        

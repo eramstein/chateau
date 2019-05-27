@@ -26,7 +26,7 @@
             <World world={$State.game.world} />
         {/if}
         {#if $State.ui.openScreen === "REGION"}
-            <Region region={$State.game.world.regions.filter(r => r.name === $State.ui.screenParameters.region)[0]} />
+            <Region region={$State.game.world.regions[$State.ui.screenParameters.region]} />
         {/if}
     </div>
     <div class="right-panel">

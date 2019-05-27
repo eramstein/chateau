@@ -3,6 +3,9 @@
     import Region from './Region.svelte';
 
     export let world;
+
+    const regions = Object.values(world.regions);
+    
 </script>
 
 <style>
@@ -24,7 +27,7 @@
 </style>
 
 <div class="world">
-    {#each world.regions as region (region.name) }
+    {#each regions as region (region.name) }
         <div class="region" on:click={ () => State.openRegion(region.name) }>
             <div class="region-name">{ region.name }</div>
             <div>{ region.description }</div>

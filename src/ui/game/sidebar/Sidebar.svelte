@@ -46,7 +46,7 @@
     </div>
     {#if ui.openScreen === "REGION"}
     <div class="block">
-        {#each game.world.regions as region (region.name) }
+        {#each Object.values(game.world.regions) as region (region.name) }
             <div class={ ui.screenParameters.region === region.name ? "selected" : ""}
                 on:click={ () => State.openRegion(region.name) }>
                 { region.name }
@@ -59,7 +59,7 @@
             { game.world.name }
         {/if}
         {#if ui.openScreen === "REGION"}
-            <SideRegion region={game.world.regions.filter(r => r.name === ui.screenParameters.region)[0]} />
+            <SideRegion region={game.world.regions[ui.screenParameters.region]} />
         {/if}
     </div>    
 </div>
