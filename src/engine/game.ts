@@ -1,4 +1,4 @@
-import { Character, setInitialCharacters } from "./characters";
+import { Character, setInitialCharacters, updateCharacter, updateCharacters } from "./characters";
 import { Time, updateTime } from "./time";
 import { createWorld, World } from "./world";
 
@@ -8,11 +8,13 @@ export interface GameState {
     time: Time;
 }
 
-export function nextGameState(gameState: GameState): GameState {
+export function nextGameState(gs: GameState): GameState {
 
-    gameState.time = updateTime(gameState.time);
+    gs.time = updateTime(gs.time);
 
-    return gameState;
+    updateCharacters(gs);
+
+    return gs;
 }
 
 export function initGameState(): GameState {

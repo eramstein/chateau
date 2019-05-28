@@ -13,6 +13,16 @@ export interface Character {
 
 const INIT_CHARACTERS_COUNT = 2;
 
+export function updateCharacters(gs: GameState) {
+    Object.values(gs.characters).forEach(char => {
+        updateCharacter(gs, char);
+    });
+}
+
+export function updateCharacter(gs: GameState, char: Character) {
+    char.needs.hunger++;
+}
+
 export function setInitialCharacters(gs: GameState) {
     const castlePosition = getCastlePosition(gs.world);
 

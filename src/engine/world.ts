@@ -80,7 +80,7 @@ export function createRegion(world: World): Region {
 
 export function createPlace(region: Region): Place {
     const place: Place = {
-        name: "Endroit " + (Object.values(region.places).length + 1),
+        name: region.name + " Endroit " + (Object.values(region.places).length + 1),
         region: region.name,
         description: "bla bla bla",
         zones: {},

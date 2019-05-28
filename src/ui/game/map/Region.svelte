@@ -3,14 +3,14 @@
 
     export let region;
     
-    const places = Object.values(region.places);
+    $: places = Object.values(region.places);
 </script>
 
 <style>
     .place {
         float: left;
-        width: 300px;
-        background: rgb(236, 231, 230);
+        width: 28%;
+        background: rgb(243, 240, 239);
         padding: 10px 20px;
         margin: 10px;
     }

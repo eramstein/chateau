@@ -4,13 +4,11 @@ export interface HealthIssue {
 }
 
 export interface HealthStatus {
-    alive: boolean;
     issues: HealthIssue[];
 }
 
 export function getDefaultHealthStatus() : HealthStatus {
     return {
-        alive: true,
         issues: [],
     }
 }
