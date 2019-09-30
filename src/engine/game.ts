@@ -8,15 +8,6 @@ export interface GameState {
     time: Time;
 }
 
-export function nextGameState(gs: GameState): GameState {
-
-    gs.time = updateTime(gs.time);
-
-    updateCharacters(gs);
-
-    return gs;
-}
-
 export function initGameState(): GameState {
     const gameState: GameState = {
         world: null,
@@ -27,6 +18,7 @@ export function initGameState(): GameState {
             day: 1,
             hour: 12,
             minute: 0,
+            second: 0,
         },
     };
     

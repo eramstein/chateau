@@ -15,33 +15,17 @@ export interface Region {
     name: string;
     type: RegionType;
     description: string;
-    places: { [key: string] : Place };
-}
-
-export interface Place {
-    name: string;
-    region: string;
-    description: string;
-    zones: { [key: string] : Zone };
-}
-
-export interface Zone {
-    name: string;
-    region: string;
-    place: string;
-    description: string;
-    characters: string[];
 }
 
 export interface Position {
     region: string;
-    place: string;
-    zone: string;
+    x: number;
+    y: number;
+    z: number;
 }
 
 const WORLD_SIZE = 5;
 const REGION_SIZE = 5;
-const PLACE_SIZE = 5;
 
 export function createWorld(): World {
     const world: World = {
@@ -67,52 +51,7 @@ export function createRegion(world: World): Region {
         type,
         name: regionName,
         description,
-        places: {},
     };
-
-    for (let index = 0; index < REGION_SIZE; index++) {
-        const newPlace = createPlace(region);
-        region.places[newPlace.name] = newPlace;
-    }
 
     return region;
-}
-
-export function createPlace(region: Region): Place {
-    const place: Place = {
-        name: region.name + " Endroit " + (Object.values(region.places).length + 1),
-        region: region.name,
-        description: "bla bla bla",
-        zones: {},
-    };
-
-    for (let index = 0; index < PLACE_SIZE; index++) {
-        const newZone = createZone(place);
-        place.zones[newZone.name] = newZone;
-    }
-
-    return place;
-}
-
-export function createZone(place: Place): Zone {
-    const zone: Zone = {
-        name: "La Zone " + (Object.values(place.zones).length + 1),
-        region: place.region,
-        place: place.name,
-        description: "bla bla bla",
-        characters: [],
-    };
-
-    return zone;
-}
-
-export function getCastlePosition(world: World): Position {    
-    const region = Object.values(world.regions)[0];
-    const place = Object.values(region.places)[0];
-    const zone =  Object.values(place.zones)[0];
-    return {
-        region: region.name,
-        place: place.name,
-        zone: zone.name,
-    };
 }

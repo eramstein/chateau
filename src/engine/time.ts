@@ -4,16 +4,25 @@ export interface Time {
     day: number;
     hour: number;
     minute: number;
+    second: number;
 }
 
 const SEASON_DURATION = 30;
 const SEASON_COUNT = 4;
 
-export function updateTime(time: Time): Time {
+export function updateTime(currentTime: Time, timeEllapsed: Time): Time {
 
-    // 1 time tick = 1 minute
-    let minute = time.minute + 1;
-    let { hour, day, season, year } = time;
+    let { second, minute, hour, day, season, year } = currentTime;
+
+    second += timeEllapsed.second;
+    minute += timeEllapsed.minute;
+    hour += timeEllapsed.hour;
+    day += timeEllapsed.day;
+
+    if (second > 59) {
+        second = 0;
+        minute++;
+    }
 
     if (minute > 59) {
         minute = 0;
@@ -41,5 +50,6 @@ export function updateTime(time: Time): Time {
         day,
         hour,
         minute,
+        second,
     };
 }

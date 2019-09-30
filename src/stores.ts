@@ -1,71 +1,28 @@
 import { get, writable } from "svelte/store";
-import { GameState, initGameState, nextGameState } from "./engine/game";
+import { GameState, initGameState } from "./engine/game";
 import { handleKeyPress } from "./keybinds";
-
-export enum Screen {
-    World = "WORLD",
-    Region = "REGION",
-}
-
-export interface UI {
-    openScreen: Screen;
-    screenParameters: any;
-    timeSpeed: number;
-    pause: boolean;
-}
-
-export interface FullState {
-    game: GameState;
-    ui: UI;
-}
-
-const TICK_TIME = 1000;
-let STOP = false;
+import { Screen, FullState } from "./ui/model";
 
 export const State = createFullState();
 
 function createFullState() {
-    const initialState = getSavedState();
+    const initialState = getNewState();
 
-    const { subscribe, set, update } = writable(initialState, function start(set) {
-        function nextState(ms) {
-            setTimeout(() => {
-                const state = get(State);
-                const t0 = performance.now();
-                const next = state.ui.pause ? state.game : nextGameState(state.game);
-                const t1 = performance.now();
-                const refreshTarget = TICK_TIME / state.ui.timeSpeed;
-                const refreshMs = Math.max(0, refreshTarget - (t1 - t0));
-                set({
-                    game: next,
-                    ui: state.ui,
-                });
-                if (!STOP) {
-                    nextState(refreshMs);
-                }
-            }, ms);
-        }
-
-        nextState(TICK_TIME);
-
-        return function stop() {
-            STOP = true;
-        };
-    });
+    const { subscribe, set, update } = writable(initialState);
 
     return {
         subscribe,
+        update,
+        set,
         initialize: () => set(getNewState()),
+        load: data => set(data),
 
         // UI actions
-        updateSpeed: diff => update(s => { s.ui.timeSpeed = Math.max(1, Math.min(10, s.ui.timeSpeed + diff)); return s; }),
-        togglePause: () => update(s => { s.ui.pause = !s.ui.pause; return s; }),
         openWorld: () => update(s => { s.ui.openScreen = Screen.World; return s; }),
         openRegion: regionName => update(s => { s.ui.openScreen = Screen.Region; s.ui.screenParameters = { region: regionName }; return s; }),
 
         // Gameplay actions
-        // addZone: zoneID => update(gs => spawnZone(gs, zoneID)),
-        tempTest: () => update(s => { s.game.world.regions["Chateau"].places["Endroit 1"].zones["La Zone 1"].description = "CHANGED"; return s; }),
+        tempTest: () => update(s => { return s; }),
     };
 }
 
@@ -75,25 +32,52 @@ function getNewState(): FullState {
         ui: {
             openScreen: Screen.World,
             screenParameters: null,
-            timeSpeed: 1,
-            pause: false,
         },
     };
 }
 
-function getSavedState(): FullState {
-    const savedData = localStorage.getItem("castleSavedGame") || "nope";
-    if (savedData === "nope") {
-        return getNewState();
-    } else {
-        const parsedData = JSON.parse(savedData);
-        return parsedData;
+let db;
+const request = window.indexedDB.open("chateau", 1);
+request.onerror = function (event) {
+    console.log('The database failed to open');
+};
+request.onsuccess = function (event) {    
+    db = request.result;
+    loadState(); 
+};
+request.onupgradeneeded = function(event) {
+    db = request.result;
+    if (!db.objectStoreNames.contains('state')) {
+        db.createObjectStore('state', { keyPath: 'id' });
     }
+}
+
+function loadState() {
+    const transaction = db.transaction(['state']);
+    const objectStore = transaction.objectStore('state');
+    const request = objectStore.get(1);
+
+    request.onerror = function(event) {
+        console.log('Transaction failed in getSavedState');
+    };
+
+    request.onsuccess = function(event) {
+        if (request.result) {            
+            State.load(request.result.state);
+        } else {
+          console.log('No data record');
+        }
+     };
 }
 
 export function saveState() {
     const savedData = get(State);
-    localStorage.setItem("castleSavedGame", JSON.stringify(savedData));
+    const request = db.transaction(['state'], 'readwrite')
+        .objectStore('state')
+        .put({ id: 1, state: savedData });
+    request.onerror = function (event) {
+        console.log('Failure while saving data');
+    }
 }
 
 export function printState() {

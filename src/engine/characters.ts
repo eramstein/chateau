@@ -1,4 +1,4 @@
-import { getCastlePosition, Position } from "./world";
+import { Position } from "./world";
 import { HealthStatus, getDefaultHealthStatus } from "./health";
 import { Needs, getDefaultNeeds } from "./needs";
 import { GameState } from "./game";
@@ -24,14 +24,6 @@ export function updateCharacter(gs: GameState, char: Character) {
 }
 
 export function setInitialCharacters(gs: GameState) {
-    const castlePosition = getCastlePosition(gs.world);
-
-    for (let index = 0; index < INIT_CHARACTERS_COUNT; index++) {
-        const newCharacter = makeCharacter(gs);        
-        gs.characters[newCharacter.name] = newCharacter;
-        setCharacterPosition(gs, newCharacter.name, castlePosition);
-    }
-
 }
 
 export function makeCharacter(gs: GameState): Character {
