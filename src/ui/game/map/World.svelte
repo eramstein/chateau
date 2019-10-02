@@ -2,9 +2,8 @@
     import { State } from '../../../stores';
     import Region from './Region.svelte';
 
-    export let world;
-
-    const regions = Object.values(world.regions);
+    $: world = $State.game.world;
+    $: regions = Object.values(world.regions);
     
 </script>
 

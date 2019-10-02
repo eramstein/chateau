@@ -1,17 +1,24 @@
 import { Character, setInitialCharacters, updateCharacter, updateCharacters } from "./characters";
 import { Time, updateTime } from "./time";
-import { createWorld, World } from "./world";
+import { createWorld, World, Position } from "./world";
+import { Player } from "./player";
 
 export interface GameState {
+    camera: { position: Position, zoom: number },
     world: World;
     characters: { [key: string] : Character };
     time: Time;
+    player: Player;
 }
 
 export function initGameState(): GameState {
+    const initPlayerPosition = { region: 'Chateau', x: 100, y: 100, z: 0 };
+
     const gameState: GameState = {
+        camera: { position: initPlayerPosition, zoom: 1 },
         world: null,
         characters: {},
+        player: { position: initPlayerPosition },
         time: {
             year: 1,
             season: 1,

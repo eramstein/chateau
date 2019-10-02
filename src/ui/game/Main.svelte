@@ -23,10 +23,10 @@
 <div class="screen">
     <div class="left-panel">
         {#if $State.ui.openScreen === "WORLD"}
-            <World world={$State.game.world} />
+            <World />
         {/if}
         {#if $State.ui.openScreen === "REGION"}
-            <Region region={$State.game.world.regions[$State.ui.screenParameters.region]} />
+            <Region />
         {/if}
     </div>
     <div class="right-panel">

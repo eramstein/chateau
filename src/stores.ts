@@ -18,8 +18,8 @@ function createFullState() {
         load: data => set(data),
 
         // UI actions
-        openWorld: () => update(s => { s.ui.openScreen = Screen.World; return s; }),
-        openRegion: regionName => update(s => { s.ui.openScreen = Screen.Region; s.ui.screenParameters = { region: regionName }; return s; }),
+        openWorld: () => update(s => { s.ui.openScreen = Screen.World; saveState(); return s; }),
+        openRegion: regionName => update(s => { s.ui.openScreen = Screen.Region; s.ui.screenParameters = { region: regionName }; saveState(); return s; }),
 
         // Gameplay actions
         tempTest: () => update(s => { return s; }),

@@ -1,20 +1,32 @@
 import { resetState, saveState, State, printState, tempTest } from "./stores";
 
 export function handleKeyPress(event) {
-    // s -> save
-    if (event.charCode === 115) {
+
+    switch(event.charCode) {
+        case 115: // s -> save
         saveState();
-    }
-    // l -> log state
-    if (event.charCode === 108) {
+        break;
+
+        case 108: // l -> log state
         printState();
-    }
-    // t -> temp test
-    if (event.charCode === 116) {
+        break;
+
+        case 116: // t -> temp test
         tempTest();
-    }
-    // r -> reset
-    if (event.charCode === 114) {
+        break;
+
+        case 114: // r -> reset
         resetState();
+        break;
+
+        case 52: // left
+        console.log('LEFT');
+        
+        break;
+
+        default: return;
     }
+
+    event.preventDefault();
+
 }
