@@ -75,7 +75,11 @@ function makeTiles(regionType: RegionType, width : number, height : number, dept
                     filledByItem: null,
                     impassable: false,
                     items: [],
+                    x,
+                    y,
+                    z,
                 };
+                tile.impassable = tile.ground === GroundType.Stone;
                 tiles[z][x][y] = tile;            
             }        
         }

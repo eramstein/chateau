@@ -4,11 +4,16 @@ import { createWorld, World, Position } from "./world";
 import { Player } from "./player";
 
 export interface GameState {
-    camera: { position: Position, zoom: number },
+    camera: Camera,
     world: World;
     characters: { [key: string] : Character };
     time: Time;
     player: Player;
+}
+
+export interface Camera {
+    position: Position;
+    zoom: number;
 }
 
 export function initGameState(): GameState {

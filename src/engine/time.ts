@@ -1,10 +1,10 @@
 export interface Time {
-    year: number;
-    season: number;
-    day: number;
-    hour: number;
-    minute: number;
-    second: number;
+    year?: number;
+    season?: number;
+    day?: number;
+    hour?: number;
+    minute?: number;
+    second?: number;
 }
 
 const SEASON_DURATION = 30;
@@ -14,10 +14,10 @@ export function updateTime(currentTime: Time, timeEllapsed: Time): Time {
 
     let { second, minute, hour, day, season, year } = currentTime;
 
-    second += timeEllapsed.second;
-    minute += timeEllapsed.minute;
-    hour += timeEllapsed.hour;
-    day += timeEllapsed.day;
+    second += timeEllapsed.second || 0;
+    minute += timeEllapsed.minute || 0;
+    hour += timeEllapsed.hour || 0;
+    day += timeEllapsed.day || 0;
 
     if (second > 59) {
         second = 0;

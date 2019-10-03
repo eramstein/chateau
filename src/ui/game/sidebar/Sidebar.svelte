@@ -42,7 +42,7 @@
         <span>Année {game.time.year}</span>
         <span>Saison {game.time.season}</span>
         <span style="padding-right: 20px">Jour {game.time.day}</span>
-        <span>{game.time.hour}:{game.time.minute < 10 ? '0' : ''}{game.time.minute}</span>
+        <span>{game.time.hour}:{game.time.minute < 10 ? '0' : ''}{game.time.minute}:{game.time.second < 10 ? '0' : ''}{game.time.second}</span>
     </div>
     {#if ui.openScreen === "REGION"}
     <div class="block">

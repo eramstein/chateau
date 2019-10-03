@@ -2,6 +2,7 @@ import { get, writable } from "svelte/store";
 import { GameState, initGameState } from "./engine/game";
 import { handleKeyPress } from "./keybinds";
 import { Screen, FullState } from "./ui/model";
+import { movePlayer } from "./engine/movement";
 
 export const State = createFullState();
 
@@ -23,6 +24,7 @@ function createFullState() {
 
         // Gameplay actions
         tempTest: () => update(s => { return s; }),
+        movePlayer: ({ x, y, z }) => update(s => { const newGS = movePlayer(s.game, { x, y, z }); s.game = newGS; return s; }),
     };
 }
 

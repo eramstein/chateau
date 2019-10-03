@@ -20,4 +20,7 @@ export interface Tile {
     filledByItem: number | null,
     items: number[],
     impassable: boolean,
+    x: number,
+    y: number,
+    z: number,
 }
