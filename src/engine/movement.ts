@@ -13,7 +13,7 @@ export function movePlayer(gs : GameState, direction: { x : number, y : number, 
     const height = region.tiles[0][0].length;
     const targetTile = region.tiles[playerPos.z + direction.z][playerPos.x + direction.x][playerPos.y + direction.y];
 
-    if (targetTile.impassable
+    if (targetTile.b
         || gs.player.position.x === 0 && direction.x === -1
         || gs.player.position.x >= width -1 && direction.x === 1
         || gs.player.position.y >= height -1 && direction.y === 1

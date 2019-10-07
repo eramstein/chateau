@@ -14,12 +14,12 @@ export enum VolumeType {
 }
 
 export interface Tile {
-    ground: GroundType,
-    surface: SurfaceType | null,
-    volume: VolumeType | null,
-    filledByItem: number | null,
-    items: number[],
-    impassable: boolean,
+    g: GroundType,
+    s: SurfaceType | null,
+    v: VolumeType | null,
+    fi: number | null,
+    i: number[],
+    b: boolean,
     x: number,
     y: number,
     z: number,

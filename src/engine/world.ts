@@ -69,17 +69,17 @@ function makeTiles(regionType: RegionType, width : number, height : number, dept
             tiles[z][x] = [];
             for (let y = 0; y < height; y++) {
                 const tile : Tile = {
-                    ground: pickRandom([GroundType.Dirt, GroundType.Stone]),
-                    surface: pickRandom([SurfaceType.Grass, null]),
-                    volume: null,
-                    filledByItem: null,
-                    impassable: false,
-                    items: [],
+                    g: pickRandom([GroundType.Dirt, GroundType.Stone]),
+                    s: pickRandom([SurfaceType.Grass, null]),
+                    v: null,
+                    fi: null,
+                    b: false,
+                    i: [],
                     x,
                     y,
                     z,
                 };
-                tile.impassable = tile.ground === GroundType.Stone;
+                tile.b = tile.g === GroundType.Stone;
                 tiles[z][x][y] = tile;            
             }        
         }

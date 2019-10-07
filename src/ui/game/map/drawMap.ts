@@ -1,6 +1,6 @@
 import { FullState } from '../../model';
 import { Tile } from '../../../engine/terrain';
-import { SURFACE_TILES, GROUND_TILES, PLAYER_SYMBOL } from './tiles';
+import { SURFACE_TILES, GROUND_TILES, PLAYER_SYMBOL } from './tilesData';
 import { Region } from '../../../engine/world';
 import { Player } from '../../../engine/player';
 import { Camera } from '../../../engine/game';
@@ -8,14 +8,17 @@ import { Camera } from '../../../engine/game';
 const TILES_AT_DEFAULT_ZOOM = 30;
 const FONT = '20px Arial'; 
 
-export function regionMap(state : FullState, canvas : HTMLCanvasElement) {
+export function regionMap(state : FullState, canvas : HTMLCanvasElement, onClickTile) {
 
     const ctx = canvas.getContext('2d');
     canvas.style.width ='100%';
     canvas.width  = canvas.offsetWidth;
     canvas.height = document.body.clientHeight;
+    canvas.onclick = canvas.onclick = e => onClickMap(canvas, e, onClickTile, tilesInRange, tileSize, region);
     ctx.font = FONT; 
 
+    let tilesInRange;
+    let region;
     const { tilesCountWidth, tilesCountHeight } = getDimensions(canvas.width, canvas.height);
     const tileSize = canvas.height / tilesCountHeight;
     const cameraPixelPos = {
@@ -25,19 +28,33 @@ export function regionMap(state : FullState, canvas : HTMLCanvasElement) {
 
     this.update = function(state : FullState) {
         const player = state.game.player;
-        const region = state.game.world.regions[state.ui.screenParameters.region];
+        region = state.game.world.regions[state.ui.screenParameters.region];
         const camera = state.game.camera;
 
         console.log('UPDATE MAP');        
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        const tilesInRange = getTilesInRange(region.tiles, camera, tilesCountWidth, tilesCountHeight);
-        const cameraOffset = getCameraOffset(camera,  region, tilesCountWidth, tilesCountHeight);
-        console.log(player.position);
-              
+        tilesInRange = getTilesInRange(region.tiles, camera, tilesCountWidth, tilesCountHeight);
+        const cameraOffset = getCameraOffset(camera,  region, tilesCountWidth, tilesCountHeight);              
         drawGround(ctx, tilesInRange, tileSize);
         drawPlayer(ctx, camera, player, tileSize, cameraPixelPos, cameraOffset);
     }
+}
+
+function onClickMap(canvas, evt, onClickTile, tilesInRange : Tile[][], tileSize, region) {
+    evt.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const pos = {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+    };
+    const tile = tilesInRange[Math.floor(pos.x/tileSize)][Math.floor(pos.y/tileSize)];
+    onClickTile({
+        region: region.name,
+        x: tile.x,
+        y: tile.y,
+        z: tile.z,
+    });
 }
 
 function getCameraOffset(camera : Camera,  region : Region, tilesCountWidth, tilesCountHeight) : { x : number, y : number } {
@@ -82,10 +99,10 @@ function drawGround(ctx, tilesInRange : Tile[][], tileSize : number) {
         for (let y = 0; y < column.length; y++) {
             const tile = tilesInRange[x][y];
             let groundColor;
-            if (tile.surface) {
-                groundColor = SURFACE_TILES[tile.surface] || '#ccc';
+            if (tile.s) {
+                groundColor = SURFACE_TILES[tile.s] || '#ccc';
             } else {
-                groundColor = GROUND_TILES[tile.ground] || '#ccc';
+                groundColor = GROUND_TILES[tile.g] || '#ccc';
             }
             ctx.fillStyle = groundColor;
             ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);

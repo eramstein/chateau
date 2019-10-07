@@ -1,6 +1,7 @@
 <script>
     import { State } from '../../../stores';
     import SideRegion from './SideRegion.svelte';
+    import TileDetails from './TileDetails.svelte';
 
     export let game;
     export let ui;    
@@ -44,23 +45,21 @@
         <span style="padding-right: 20px">Jour {game.time.day}</span>
         <span>{game.time.hour}:{game.time.minute < 10 ? '0' : ''}{game.time.minute}:{game.time.second < 10 ? '0' : ''}{game.time.second}</span>
     </div>
-    {#if ui.openScreen === "REGION"}
-    <div class="block">
-        {#each Object.values(game.world.regions) as region (region.name) }
-            <div class={ ui.screenParameters.region === region.name ? "selected" : ""}
-                on:click={ () => State.openRegion(region.name) }>
-                { region.name }
-            </div>
-        {/each}
-    </div>
-    {/if}
     <div class="block details">
-        {#if ui.openScreen === "WORLD"}
-            { game.world.name }
-        {/if}
-        {#if ui.openScreen === "REGION"}
-            <SideRegion region={game.world.regions[ui.screenParameters.region]} />
-        {/if}
+        {#if ui.selection}
+            {#if ui.selection.type === "TILE"}
+                <TileDetails tile={ui.selection.data} />
+            {:else if 5 > x}
+                <p>soon</p>
+            {/if}
+        {:else}
+            {#if ui.openScreen === "WORLD"}
+                { game.world.name }
+            {/if}
+            {#if ui.openScreen === "REGION"}
+                <SideRegion region={game.world.regions[ui.screenParameters.region]} />
+            {/if}
+        {/if}        
     </div>    
 </div>
 

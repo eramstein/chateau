@@ -3,6 +3,7 @@ import { GameState, initGameState } from "./engine/game";
 import { handleKeyPress } from "./keybinds";
 import { Screen, FullState } from "./ui/model";
 import { movePlayer } from "./engine/movement";
+import { onClickTile } from "./ui/game/map/onClickTile";
 
 export const State = createFullState();
 
@@ -21,6 +22,7 @@ function createFullState() {
         // UI actions
         openWorld: () => update(s => { s.ui.openScreen = Screen.World; saveState(); return s; }),
         openRegion: regionName => update(s => { s.ui.openScreen = Screen.Region; s.ui.screenParameters = { region: regionName }; saveState(); return s; }),
+        clickTile: position => update(s => { s.ui.selection = onClickTile(s.game, position); return s; }),
 
         // Gameplay actions
         tempTest: () => update(s => { return s; }),
@@ -34,6 +36,7 @@ function getNewState(): FullState {
         ui: {
             openScreen: Screen.World,
             screenParameters: null,
+            selection: null,
         },
     };
 }
@@ -44,7 +47,7 @@ request.onerror = function (event) {
     console.log('The database failed to open');
 };
 request.onsuccess = function (event) {    
-    db = request.result;
+    db = request.result;    
     loadState(); 
 };
 request.onupgradeneeded = function(event) {
@@ -55,6 +58,7 @@ request.onupgradeneeded = function(event) {
 }
 
 function loadState() {
+    var t0 = performance.now();
     const transaction = db.transaction(['state']);
     const objectStore = transaction.objectStore('state');
     const request = objectStore.get(1);
@@ -66,6 +70,8 @@ function loadState() {
     request.onsuccess = function(event) {
         if (request.result) {            
             State.load(request.result.state);
+            var t1 = performance.now();
+            console.log("Data loaded in " + (t1 - t0));
         } else {
           console.log('No data record');
         }

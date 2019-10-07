@@ -7,7 +7,7 @@
 
     onMount(() => {
         const canvas = document.getElementById("canvas");
-		map = new regionMap($State, canvas);
+		map = new regionMap($State, canvas, State.clickTile);
     });
 
     $: {
