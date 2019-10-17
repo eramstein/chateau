@@ -28,7 +28,7 @@ export interface Position {
 }
 
 const WORLD_SIZE = 5;
-const REGION_SIZE = 250;
+const REGION_SIZE = 1000;
 
 export function createWorld(): World {
     const world: World = {

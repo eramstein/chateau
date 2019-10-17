@@ -18,10 +18,11 @@ function createFullState() {
         set,
         initialize: () => set(getNewState()),
         load: data => set(data),
+        setRegion: (region) => update(s => { s.game.world.regions[region.name] = region; return s; }),
 
         // UI actions
-        openWorld: () => update(s => { s.ui.openScreen = Screen.World; saveState(); return s; }),
-        openRegion: regionName => update(s => { s.ui.openScreen = Screen.Region; s.ui.screenParameters = { region: regionName }; saveState(); return s; }),
+        openWorld: () => update(s => { s.ui.openScreen = Screen.World; return s; }),
+        openRegion: regionName => update(s => { s.ui.openScreen = Screen.Region; s.ui.screenParameters = { region: regionName }; return s; }),
         clickTile: position => update(s => { s.ui.selection = onClickTile(s.game, position); return s; }),
 
         // Gameplay actions
@@ -47,7 +48,7 @@ request.onerror = function (event) {
     console.log('The database failed to open');
 };
 request.onsuccess = function (event) {    
-    db = request.result;    
+    db = request.result;
     loadState(); 
 };
 request.onupgradeneeded = function(event) {
@@ -55,37 +56,72 @@ request.onupgradeneeded = function(event) {
     if (!db.objectStoreNames.contains('state')) {
         db.createObjectStore('state', { keyPath: 'id' });
     }
+    if (!db.objectStoreNames.contains('regions')) {
+        db.createObjectStore('regions', { keyPath: 'id' });
+    }
 }
 
 function loadState() {
     var t0 = performance.now();
     const transaction = db.transaction(['state']);
     const objectStore = transaction.objectStore('state');
-    const request = objectStore.get(1);
+    let request = objectStore.get(1);
 
     request.onerror = function(event) {
-        console.log('Transaction failed in getSavedState');
+        console.log('Failure while loading data', event.target);
     };
 
     request.onsuccess = function(event) {
         if (request.result) {            
-            State.load(request.result.state);
+            State.load(request.result.state);            
             var t1 = performance.now();
             console.log("Data loaded in " + (t1 - t0));
         } else {
           console.log('No data record');
         }
-     };
+    };
+
+    transaction.oncomplete = function(event) {
+        console.log(get(State));
+        
+        const regionsTransaction = db.transaction(['regions']);
+        const regionsStore = regionsTransaction.objectStore('regions');
+        regionsStore.openCursor().onsuccess = function(event) {
+            var cursor = event.target.result;
+            if (cursor) {            
+                State.setRegion(cursor.value.data);
+                cursor.continue();
+            }
+        };
+    };
+
 }
 
 export function saveState() {
+    var t0 = performance.now();
     const savedData = get(State);
+    const regions = savedData.game.world.regions;
+    savedData.game.world.regions = {};
+
     const request = db.transaction(['state'], 'readwrite')
         .objectStore('state')
         .put({ id: 1, state: savedData });
     request.onerror = function (event) {
-        console.log('Failure while saving data');
+        console.log('Failure while saving data', event.target);
     }
+    request.onsuccess = function(event) {
+        var t1 = performance.now();
+        console.log("Data saved in " + (t1 - t0));
+    };
+
+    Object.values(regions).forEach(r => {
+        const request = db.transaction(['regions'], 'readwrite')
+            .objectStore('regions')
+            .put({ id: r.name, data: r });
+        request.onerror = function (event) {
+            console.log('Failure while saving region', r, event.target);
+        }
+    });
 }
 
 export function printState() {
@@ -102,7 +138,7 @@ export function tempTest() {
 }
 
 window.onbeforeunload = () => {
-    saveState();
+    //saveState();
 };
 
 window.onkeypress = handleKeyPress;
