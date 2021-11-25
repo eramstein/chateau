@@ -1,7 +1,6 @@
 <script>
     import { State } from '../../stores';
     import World from './map/World.svelte';
-    import Region from './map/Region.svelte';
     import Sidebar from './sidebar/Sidebar.svelte';
 </script>
 
@@ -25,12 +24,9 @@
         {#if $State.ui.openScreen === "WORLD"}
             <World />
         {/if}
-        {#if $State.ui.openScreen === "REGION"}
-            <Region />
-        {/if}
     </div>
     <div class="right-panel">
-        <Sidebar ui={$State.ui} game={$State.game} />
+        <Sidebar />
     </div>
 </div>
 

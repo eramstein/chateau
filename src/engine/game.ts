@@ -1,41 +1,22 @@
-import { Character, setInitialCharacters, updateCharacter, updateCharacters } from "./characters";
-import { Time, updateTime } from "./time";
-import { createWorld, World, Position } from "./world";
-import { Player } from "./player";
+import { GameState } from './model'
+import { updateTime } from './time'
+import { createWorld } from './world'
 
-export interface GameState {
-    camera: Camera,
-    world: World;
-    characters: { [key: string] : Character };
-    time: Time;
-    player: Player;
+export function initGameState (): GameState {
+  const gameState: GameState = {
+    world: null,
+    characters: {},
+    time: new Date(1408, 0, 1)
+  }
+
+  gameState.world = createWorld()
+
+  return gameState
 }
 
-export interface Camera {
-    position: Position;
-    zoom: number;
-}
-
-export function initGameState(): GameState {
-    const initPlayerPosition = { region: 'Chateau', x: 100, y: 100, z: 0 };
-
-    const gameState: GameState = {
-        camera: { position: initPlayerPosition, zoom: 1 },
-        world: null,
-        characters: {},
-        player: { position: initPlayerPosition },
-        time: {
-            year: 1,
-            season: 1,
-            day: 1,
-            hour: 12,
-            minute: 0,
-            second: 0,
-        },
-    };
-    
-    gameState.world = createWorld();
-    setInitialCharacters(gameState);
-
-    return gameState;
+export function runSimulation (gs: GameState, seconds: number) {
+  const t0 = performance.now()
+  gs.time = updateTime(gs.time, seconds)
+  const t1 = performance.now()
+  console.log('runSimulation', (t1 - t0))
 }

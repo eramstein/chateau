@@ -1,10 +1,17 @@
 <script>
     import { State } from '../../../stores';
+    import { SimSpeed } from '../../model';
     import SideRegion from './SideRegion.svelte';
-    import TileDetails from './TileDetails.svelte';
-
-    export let game;
-    export let ui;    
+    $: ui = $State.ui;
+    $: game = $State.game;
+  
+    let simInterval
+    $: {
+        clearInterval(simInterval)
+        if (ui.simSpeed > 0) {
+            simInterval = setInterval(() => State.runSimulation(ui.simSpeed), 1000)
+        }        
+    }
 </script>
 
 <style>
@@ -40,21 +47,22 @@
         <div>PERSOS</div>
     </div>
     <div class="block">
-        <span>Année {game.time.year}</span>
-        <span>Saison {game.time.season}</span>
-        <span style="padding-right: 20px">Jour {game.time.day}</span>
-        <span>{game.time.hour}:{game.time.minute < 10 ? '0' : ''}{game.time.minute}:{game.time.second < 10 ? '0' : ''}{game.time.second}</span>
+        <div>
+            {game.time.toLocaleString()}
+        </div>
+        <div>
+            <button on:click={ () => ui.simSpeed = SimSpeed.S0 }>||</button>
+            <button on:click={ () => ui.simSpeed = SimSpeed.S1 }>></button>
+            <button on:click={ () => ui.simSpeed = SimSpeed.S2 }>>></button>
+            <button on:click={ () => ui.simSpeed = SimSpeed.S3 }>>></button>
+        </div>
     </div>
     <div class="block details">
         {#if ui.selection}
-            {#if ui.selection.type === "TILE"}
-                <TileDetails tile={ui.selection.data} />
-            {:else if 5 > x}
-                <p>soon</p>
-            {/if}
+            <p>soon</p>
         {:else}
             {#if ui.openScreen === "WORLD"}
-                { game.world.name }
+                world
             {/if}
             {#if ui.openScreen === "REGION"}
                 <SideRegion region={game.world.regions[ui.screenParameters.region]} />

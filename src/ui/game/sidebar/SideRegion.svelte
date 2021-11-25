@@ -1,5 +1,5 @@
 <script>
-    export let region;    
+    export let region
 </script>
 
 <style>
