@@ -2,8 +2,8 @@
 
 export interface GameState {
     world: World;
-    characters: { [key: string] : Character };
-    time: Date;
+    characters: Character[];
+    time: number; // minutes passed since T0
 }
 
 export interface World {
@@ -29,4 +29,14 @@ export interface Zone {
 
 export interface Character {
     name: string;
+    needs: Needs;
+    health: Health;
+}
+
+export interface Needs {
+    hunger: number;
+}
+
+export interface Health {
+    alive: boolean;
 }

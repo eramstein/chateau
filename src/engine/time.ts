@@ -1,4 +1,3 @@
-export function updateTime (currentTime: Date, secondsEllapsed: number): Date {
-  currentTime.setSeconds(currentTime.getSeconds() + secondsEllapsed)
-  return currentTime
+export function updateTime (currentTime: number, minutesEllapsed: number): number {
+  return currentTime + minutesEllapsed
 }

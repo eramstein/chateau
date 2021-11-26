@@ -24,7 +24,7 @@ function getNewState (): FullState {
   return {
     game: initGameState(),
     ui: {
-      openScreen: Screen.World,
+      openScreen: Screen.Characters,
       screenParameters: null,
       selection: null,
       simSpeed: SimSpeed.S0

@@ -1,6 +1,6 @@
 <script>
     import { State } from '../../../stores';
-    import { SimSpeed } from '../../model';
+    import { SimSpeed, Screen } from '../../model';
     import SideRegion from './SideRegion.svelte';
     $: ui = $State.ui;
     $: game = $State.game;
@@ -35,20 +35,22 @@
     }
     .details {
     }
+    
 </style>
 
 <div>
     <div class="top-menu">
-        <div class={ ui.openScreen === "WORLD" || ui.openScreen === "REGION" ? "selected" : ""} 
-            on:click={ () => State.openWorld() }
+        <div class={ ui.openScreen === Screen.World || ui.openScreen === Screen.Region ? "selected" : ""} 
+            on:click={ () => $State.ui.openScreen = Screen.World }
         >
             MONDE
         </div>
-        <div>PERSOS</div>
+        <div  class={ ui.openScreen === Screen.Characters ? "selected" : ""} 
+            on:click={ () => $State.ui.openScreen = Screen.Characters }>PERSOS</div>
     </div>
     <div class="block">
         <div>
-            {game.time.toLocaleString()}
+            {game.time}
         </div>
         <div>
             <button on:click={ () => ui.simSpeed = SimSpeed.S0 }>||</button>

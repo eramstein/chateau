@@ -1,7 +1,11 @@
 <script>
     import { State } from '../../stores';
+    import { Screen } from '../model';
     import World from './map/World.svelte';
+    import Characters from './characters/Characters.svelte';
     import Sidebar from './sidebar/Sidebar.svelte';
+
+    $: screen = $State.ui.openScreen
 </script>
 
 <style>    
@@ -21,8 +25,13 @@
 
 <div class="screen">
     <div class="left-panel">
-        {#if $State.ui.openScreen === "WORLD"}
+        {#if screen === Screen.World}
+        <div>World</div>
             <World />
+        {/if}
+        {#if screen === Screen.Characters}
+        <div>Characters</div>
+            <Characters />
         {/if}
     </div>
     <div class="right-panel">
