@@ -1,8 +1,9 @@
-import { World } from '../model'
+import { REGIONS } from "../../data/regions";
+import { World } from "../model";
 
-export function createWorld (): World {
+export function createWorld(): World {
   const world: World = {
-    regions: {}
-  }
-  return world
+    regions: [REGIONS.Village],
+  };
+  return world;
 }

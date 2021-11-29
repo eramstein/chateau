@@ -2,6 +2,7 @@
     import { State } from '../../stores';
     import { Screen } from '../model';
     import World from './map/World.svelte';
+    import Items from './items/Items.svelte';
     import Characters from './characters/Characters.svelte';
     import Sidebar from './sidebar/Sidebar.svelte';
 
@@ -26,12 +27,13 @@
 <div class="screen">
     <div class="left-panel">
         {#if screen === Screen.World}
-        <div>World</div>
             <World />
         {/if}
         {#if screen === Screen.Characters}
-        <div>Characters</div>
             <Characters />
+        {/if}
+        {#if screen === Screen.Items}
+            <Items />
         {/if}
     </div>
     <div class="right-panel">

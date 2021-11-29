@@ -4,16 +4,17 @@
 </script>
 
 <style>
-    .characters {
-        
+    .json-dump {
+        width: 400px;
+        height: 800px;
     }
 </style>
 
 <div class="characters">
     {#each characters as character}
 		<div>
-            <div>{character.name}</div>
-            <div>{JSON.stringify(character)}</div>
+            <div><b>{character.name}</b></div>
+            <textarea class="json-dump">{JSON.stringify(character, null, 2)}</textarea>
         </div>
 	{/each}
 </div>

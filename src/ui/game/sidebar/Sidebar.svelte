@@ -41,12 +41,11 @@
 <div>
     <div class="top-menu">
         <div class={ ui.openScreen === Screen.World || ui.openScreen === Screen.Region ? "selected" : ""} 
-            on:click={ () => $State.ui.openScreen = Screen.World }
-        >
-            MONDE
-        </div>
+            on:click={ () => $State.ui.openScreen = Screen.World }>MONDE</div>
         <div  class={ ui.openScreen === Screen.Characters ? "selected" : ""} 
             on:click={ () => $State.ui.openScreen = Screen.Characters }>PERSOS</div>
+        <div  class={ ui.openScreen === Screen.Items ? "selected" : ""} 
+            on:click={ () => $State.ui.openScreen = Screen.Items }>OBJETS</div>
     </div>
     <div class="block">
         <div>
@@ -63,10 +62,10 @@
         {#if ui.selection}
             <p>soon</p>
         {:else}
-            {#if ui.openScreen === "WORLD"}
+            {#if ui.openScreen === Screen.World}
                 world
             {/if}
-            {#if ui.openScreen === "REGION"}
+            {#if ui.openScreen === Screen.Region}
                 <SideRegion region={game.world.regions[ui.screenParameters.region]} />
             {/if}
         {/if}        
