@@ -32,12 +32,26 @@ export interface Item {
   position: Position;
   name?: string;
   description?: string;
-  isContainer?: boolean;
 }
 
 export enum ItemType {
   Food = "FOOD",
-  Drink = "DRINK",
+  Container = "CONTAINER",
+}
+
+export type Container = Item & {
+  containerType: ContainerType;
+  contentType: ContentType;
+  volume: number;
+  fillRatio: number;
+};
+
+export enum ContainerType {
+  Bottle = "BOTTLE",
+}
+
+export enum ContentType {
+  Water = "WATER",
 }
 
 export type Food = Item & {

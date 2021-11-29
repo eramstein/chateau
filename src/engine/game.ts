@@ -1,4 +1,5 @@
 import { CHARACTERS } from "../data/characters";
+import { CONTAINERS } from "../data/containers";
 import { FOODS } from "../data/foods";
 import {
   updateCharactersNeeds,
@@ -19,9 +20,10 @@ export function initGameState(): GameState {
 
   gameState.world = createWorld();
 
-  const initItems = [FOODS.Bread].map((template) =>
-    makeItem(gameState, { region: 0, place: 0, zone: 0 }, template)
+  const initItems = [FOODS.Bread, CONTAINERS.WaterBottle].map((template, i) =>
+    makeItem(i, { region: 0, place: 0, zone: 0 }, template)
   );
+
   initItems.forEach((item) => {
     gameState.items[item.id] = item;
   });
