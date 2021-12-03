@@ -24,12 +24,14 @@ export interface Place {
 export interface Zone {
   name: string;
   description: string;
+  items: number[];
 }
 
 export interface Item {
   id: number;
   type: ItemType;
   position: Position;
+  carriedBy?: Character;
   name?: string;
   description?: string;
 }
@@ -69,6 +71,32 @@ export interface Character {
   position: Position;
   needs: Needs;
   health: Health;
+  activity: Activity;
+  objectives: Objective[];
+  priorityObjective: Objective;
+}
+
+export interface Activity {
+  type: ActivityType;
+  doneRatio?: number;
+  objectiveId: string;
+  targetPosition?: Position;
+  targetItemId?: number;
+}
+
+export enum ActivityType {
+  Move = "MOVE",
+  Consume = "CONSUME",
+}
+
+export interface Objective {
+  id: string;
+  type: ObjectiveType;
+}
+
+export enum ObjectiveType {
+  Drink = "DRINK",
+  Eat = "EAT",
 }
 
 export interface Position {
@@ -78,8 +106,15 @@ export interface Position {
 }
 
 export interface Needs {
-  hunger: number;
-  thirst: number;
+  vital: {
+    hunger: number;
+    thirst: number;
+    sleep: number;
+  };
+  confort: {};
+  security: {};
+  relational: {};
+  social: {};
 }
 
 export interface Health {

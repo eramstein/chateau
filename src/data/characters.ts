@@ -8,12 +8,22 @@ const DEFAULTS: Character = {
     zone: 0,
   },
   needs: {
-    hunger: 0,
-    thirst: 0,
+    vital: {
+      hunger: 0,
+      thirst: 0,
+      sleep: 0,
+    },
+    confort: {},
+    security: {},
+    relational: {},
+    social: {},
   },
   health: {
     alive: true,
   },
+  objectives: [],
+  activity: null,
+  priorityObjective: null,
 };
 
 export const CHARACTERS: { [key: string]: Character } = {

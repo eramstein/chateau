@@ -1,21 +1,22 @@
-import { resetState, saveState, printState } from './stores'
+import { resetState, saveState, printState } from "./stores";
 
-export function handleKeyPress (event) {
+export function handleKeyPress(event) {
   switch (event.charCode) {
     case 115: // s -> save
-      saveState()
-      break
+      saveState();
+      break;
 
     case 108: // l -> log state
-      printState()
-      break
+      printState();
+      break;
 
     case 114: // r -> reset
-      resetState()
-      break
+      resetState();
+      break;
 
-    default: return
+    default:
+      return;
   }
 
-  event.preventDefault()
+  event.preventDefault();
 }

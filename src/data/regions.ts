@@ -12,14 +12,17 @@ export const REGIONS: { [key: string]: Region } = {
           {
             name: "Chambre",
             description: "La où on dort pardi",
+            items: [],
           },
           {
             name: "Cuisine",
             description: "La où on cusine pardi",
+            items: [],
           },
           {
             name: "Jardin",
             description: "Dehors",
+            items: [],
           },
         ],
       },
