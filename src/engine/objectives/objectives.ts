@@ -16,6 +16,13 @@ export function updateCharacterObjectives(gs: GameState, character: Character) {
   setPriorityObjective(gs, character);
 }
 
+export function clearPriorityObjective(character: Character) {
+  character.priorityObjective.type = null;
+  character.objectives = character.objectives.filter(
+    (o) => o.id !== character.priorityObjective.id
+  );
+}
+
 function addCharacterObjectives(gs: GameState, character: Character) {
   // VITAL NEEDS
   if (
