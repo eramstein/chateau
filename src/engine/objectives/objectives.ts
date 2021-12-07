@@ -16,11 +16,12 @@ export function updateCharacterObjectives(gs: GameState, character: Character) {
   setPriorityObjective(gs, character);
 }
 
-export function clearPriorityObjective(character: Character) {
+export function clearPriorityObjective(gs: GameState, character: Character) {
   character.priorityObjective.type = null;
   character.objectives = character.objectives.filter(
     (o) => o.id !== character.priorityObjective.id
   );
+  setPriorityObjective(gs, character);
 }
 
 function addCharacterObjectives(gs: GameState, character: Character) {

@@ -20,12 +20,14 @@ export function setDrinkActivity(gs: GameState, character: Character) {
       type: ActivityType.Consume,
       targetItemId: closestDrink.id,
       objectiveId: character.priorityObjective.id,
+      doneRatio: 0,
     };
   } else {
     character.activity = {
       type: ActivityType.Move,
       targetPosition: closestDrink.position,
       objectiveId: character.priorityObjective.id,
+      doneRatio: 0,
     };
   }
 }
@@ -46,6 +48,6 @@ export function doDrink(gs: GameState, character: Character) {
     character.needs.vital.thirst < ADD_OBJECTIVE_THRESHOLDS.thirst &&
     character.priorityObjective.type === ObjectiveType.Drink
   ) {
-    clearPriorityObjective(character);
+    clearPriorityObjective(gs, character);
   }
 }

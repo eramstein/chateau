@@ -1,5 +1,7 @@
 import { ObjectiveType } from "./model";
 
+export const TICK_DURATION = 1;
+
 export const ADD_OBJECTIVE_THRESHOLDS = {
   thirst: 100,
   hunger: 50,

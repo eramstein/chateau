@@ -1,5 +1,6 @@
 import { ActivityType, Character, GameState, ObjectiveType } from "../model";
 import { doDrink, setDrinkActivity } from "./drink";
+import { doMove } from "./move";
 
 export function updateCharactersActivities(gs: GameState) {
   gs.characters.forEach((character) => {
@@ -35,7 +36,9 @@ function doActivity(gs: GameState, character: Character) {
       }
       if (character.priorityObjective.type === ObjectiveType.Eat) {
       }
-
+      break;
+    case ActivityType.Move:
+      doMove(gs, character);
       break;
 
     default:

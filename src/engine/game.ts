@@ -9,7 +9,7 @@ import {
 import { makeItem } from "./items/items";
 import { GameState } from "./model";
 import { updateCharactersObjectives } from "./objectives/objectives";
-import { CHECK_TIMERS } from "./params";
+import { CHECK_TIMERS, TICK_DURATION } from "./params";
 import { updateTime } from "./time";
 import { createWorld } from "./world/world";
 
@@ -24,7 +24,7 @@ export function initGameState(): GameState {
   gameState.world = createWorld();
 
   [FOODS.Bread, CONTAINERS.WaterBottle].forEach((template, i) => {
-    makeItem(gameState, i, { region: 0, place: 0, zone: 0 }, template);
+    makeItem(gameState, i, { region: 0, place: 0, zone: 1 }, template);
   });
 
   return gameState;
@@ -38,7 +38,7 @@ export function runSimulation(gs: GameState, minutes: number) {
     updateCharactersHealth(gs);
     gs.time % CHECK_TIMERS.objectives === 0 && updateCharactersObjectives(gs);
     updateCharactersActivities(gs);
-    gs.time = updateTime(gs.time, 1);
+    gs.time = updateTime(gs.time, TICK_DURATION);
   }
 
   const t1 = performance.now();
