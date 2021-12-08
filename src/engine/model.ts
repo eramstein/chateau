@@ -58,6 +58,7 @@ export enum ContentType {
 
 export type Food = Item & {
   foodType: FoodType;
+  calories: number;
 };
 
 export enum FoodType {
