@@ -6,31 +6,27 @@ export interface GameState {
 }
 
 export interface World {
-  regions: Region[];
+  tiles: Tile[][][];
 }
 
-export interface Region {
-  name: string;
-  description: string;
-  places: Place[];
+export interface Tile {
+  pos: Pos;
 }
 
-export interface Place {
-  name: string;
-  description: string;
-  zones: Zone[];
+export interface Pos {
+  x: number;
+  y: number;
+  z: number;
 }
 
-export interface Zone {
-  name: string;
-  description: string;
-  items: number[];
+export interface Player {
+  pos: Pos;
 }
 
 export interface Item {
   id: number;
   type: ItemType;
-  position: Position;
+  pos: Pos;
   carriedBy?: Character;
   name?: string;
   description?: string;
@@ -69,7 +65,7 @@ export enum FoodType {
 
 export interface Character {
   name: string;
-  position: Position;
+  pos: Pos;
   needs: Needs;
   health: Health;
   activity: Activity;
@@ -81,11 +77,12 @@ export interface Activity {
   type: ActivityType;
   doneRatio?: number;
   objectiveId: string;
-  targetPosition?: Position;
+  targetPos?: Pos;
   targetItemId?: number;
 }
 
 export enum ActivityType {
+  Idle = "",
   Move = "MOVE",
   Consume = "CONSUME",
 }
@@ -96,14 +93,9 @@ export interface Objective {
 }
 
 export enum ObjectiveType {
+  None = "",
   Drink = "DRINK",
   Eat = "EAT",
-}
-
-export interface Position {
-  region: number;
-  place: number;
-  zone: number;
 }
 
 export interface Needs {

@@ -15,7 +15,7 @@ import { createWorld } from "./world/world";
 
 export function initGameState(): GameState {
   const gameState: GameState = {
-    world: null,
+    world: { tiles: [] },
     characters: [CHARACTERS.Robert].map((c) => JSON.parse(JSON.stringify(c))),
     items: {},
     time: 0,
@@ -24,7 +24,7 @@ export function initGameState(): GameState {
   gameState.world = createWorld();
 
   [FOODS.Bread, CONTAINERS.WaterBottle].forEach((template, i) => {
-    makeItem(gameState, i, { region: 0, place: 0, zone: 1 }, template);
+    makeItem(gameState, i, { x: i, y: i, z: 0 }, template);
   });
 
   return gameState;

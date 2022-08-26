@@ -17,7 +17,7 @@ export function updateCharacterObjectives(gs: GameState, character: Character) {
 }
 
 export function clearPriorityObjective(gs: GameState, character: Character) {
-  character.priorityObjective.type = null;
+  character.priorityObjective.type = ObjectiveType.None;
   character.objectives = character.objectives.filter(
     (o) => o.id !== character.priorityObjective.id
   );

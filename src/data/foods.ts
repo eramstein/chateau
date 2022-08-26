@@ -5,10 +5,10 @@ const DEFAULTS: Food = {
   type: ItemType.Food,
   foodType: FoodType.Baked,
   calories: 50,
-  position: {
-    region: 0,
-    place: 0,
-    zone: 0,
+  pos: {
+    x: 0,
+    y: 0,
+    z: 0,
   },
 };
 

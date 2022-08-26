@@ -1,27 +1,28 @@
-import { REGIONS } from "../../data/regions";
-import { Place, Position, World, Zone } from "../model";
+import { Pos, Tile, World } from "../model";
+
+const WIDTH = 50;
+const HEIGHT = 50;
+const DEPTH = 1;
 
 export function createWorld(): World {
-  const world: World = {
-    regions: [REGIONS.Village].map((r) => JSON.parse(JSON.stringify(r))),
+  const tiles: Tile[][][] = [];
+
+  for (let z = 0; z < DEPTH; z++) {
+    const level: Tile[][] = [];
+    for (let x = 0; x < WIDTH; x++) {
+      const column: Tile[] = [];
+      for (let y = 0; y < HEIGHT; y++) {
+        column.push({ pos: { x, y, z } });
+      }
+      level.push(column);
+    }
+    tiles.push(level);
+  }
+  return {
+    tiles,
   };
-  return world;
 }
 
-export function isSamePosition(pos1: Position, pos2: Position): boolean {
-  return (
-    pos1.region === pos2.region &&
-    pos1.place === pos2.place &&
-    pos1.zone === pos2.zone
-  );
-}
-
-export function getZone(world: World, position: Position): Zone {
-  return world.regions[position.region].places[position.place].zones[
-    position.zone
-  ];
-}
-
-export function getPlace(world: World, position: Position): Place {
-  return world.regions[position.region].places[position.place];
+export function isSamePos(pos1: Pos, pos2: Pos): boolean {
+  return pos1.x === pos2.x && pos1.y === pos2.y && pos1.z === pos2.z;
 }

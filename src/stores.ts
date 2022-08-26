@@ -7,12 +7,11 @@ import { Screen, FullState, SimSpeed } from "./ui/model";
 const defaultUiState = {
   openScreen: Screen.Characters,
   screenParameters: null,
-  selection: null,
   simSpeed: SimSpeed.S0,
 };
 
 const defaultGameState: GameState = {
-  world: { regions: [] },
+  world: { tiles: [] },
   characters: [],
   items: {},
   time: 0,
@@ -48,7 +47,6 @@ function getNewState(): FullState {
     ui: {
       openScreen: Screen.Characters,
       screenParameters: null,
-      selection: null,
       simSpeed: SimSpeed.S0,
     },
   };

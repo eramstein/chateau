@@ -9,12 +9,13 @@ import {
 } from "../model";
 import { clearPriorityObjective } from "../objectives/objectives";
 import { ADD_OBJECTIVE_THRESHOLDS } from "../params";
-import { isSamePosition } from "../world/world";
+import { isSamePos } from "../world/world";
+import { idleCharacter } from "./activity";
 
 export function setDrinkActivity(gs: GameState, character: Character) {
-  const closestDrink = findClosestItem(gs, character.position, isDrinkable);
+  const closestDrink = findClosestItem(gs, character.pos, isDrinkable);
   if (!closestDrink) return;
-  const isInZone = isSamePosition(closestDrink.position, character.position);
+  const isInZone = isSamePos(closestDrink.pos, character.pos);
   if (isInZone) {
     character.activity = {
       type: ActivityType.Consume,
@@ -25,7 +26,7 @@ export function setDrinkActivity(gs: GameState, character: Character) {
   } else {
     character.activity = {
       type: ActivityType.Move,
-      targetPosition: closestDrink.position,
+      targetPos: closestDrink.pos,
       objectiveId: character.priorityObjective.id,
       doneRatio: 0,
     };
@@ -33,6 +34,7 @@ export function setDrinkActivity(gs: GameState, character: Character) {
 }
 
 export function doDrink(gs: GameState, character: Character) {
+  if (!character.activity.targetItemId) return;
   const item = gs.items[character.activity.targetItemId] as Container;
   // 1 unit of volume quenches 1 unit of thirst
   const ratioToDrink = character.needs.vital.thirst / item.volume;
@@ -43,7 +45,7 @@ export function doDrink(gs: GameState, character: Character) {
     character.needs.vital.thirst = 0;
     item.fillRatio -= ratioToDrink;
   }
-  character.activity = null;
+  idleCharacter(character);
   if (
     character.needs.vital.thirst < ADD_OBJECTIVE_THRESHOLDS.thirst &&
     character.priorityObjective.type === ObjectiveType.Drink

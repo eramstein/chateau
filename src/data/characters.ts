@@ -1,11 +1,11 @@
-import { Character } from "../engine/model";
+import { ActivityType, Character, ObjectiveType } from "../engine/model";
 
 const DEFAULTS: Character = {
   name: "Mr Default",
-  position: {
-    region: 0,
-    place: 0,
-    zone: 0,
+  pos: {
+    x: 0,
+    y: 0,
+    z: 0,
   },
   needs: {
     vital: {
@@ -22,8 +22,8 @@ const DEFAULTS: Character = {
     alive: true,
   },
   objectives: [],
-  activity: null,
-  priorityObjective: null,
+  activity: { type: ActivityType.Idle, objectiveId: "" },
+  priorityObjective: { type: ObjectiveType.None, id: "" },
 };
 
 export const CHARACTERS: { [key: string]: Character } = {

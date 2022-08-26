@@ -29,7 +29,7 @@ export interface Selection {
 export interface UI {
   openScreen: Screen;
   screenParameters: any;
-  selection: Selection;
+  selection?: Selection;
   simSpeed: SimSpeed;
 }
 

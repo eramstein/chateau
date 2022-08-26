@@ -12,10 +12,10 @@ const DEFAULTS: Container = {
   contentType: ContentType.Water,
   volume: 1,
   fillRatio: 0,
-  position: {
-    region: 0,
-    place: 0,
-    zone: 0,
+  pos: {
+    x: 0,
+    y: 0,
+    z: 0,
   },
 };
 

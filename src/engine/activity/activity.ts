@@ -50,3 +50,7 @@ function doActivity(gs: GameState, character: Character) {
       break;
   }
 }
+
+export function idleCharacter(character: Character) {
+  character.activity = { type: ActivityType.Idle, objectiveId: "Do Nothing" };
+}

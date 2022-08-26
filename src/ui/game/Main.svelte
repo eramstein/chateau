@@ -13,6 +13,7 @@
     .screen {
         display: flex;
         height: 100vh;
+        background-color: #fafafa;
     }
     .left-panel {
         width: 80%;

@@ -1,4 +1,4 @@
-import { GameState, Item, Place, Position, Region, Zone } from "../model";
+import { GameState, Item, Pos } from "../model";
 import { getPlace, getZone } from "../world/world";
 
 export function getNewItemId(gs: GameState) {
@@ -7,86 +7,16 @@ export function getNewItemId(gs: GameState) {
   return newId;
 }
 
-export function makeItem(
-  gs: GameState,
-  id: number,
-  position: Position,
-  template: Item
-) {
+export function makeItem(gs: GameState, id: number, pos: Pos, template: Item) {
   const item = {
     ...template,
     id,
-    position,
+    pos,
   };
   gs.items[id] = item;
-  gs.world.regions[position.region].places[position.place].zones[
-    position.zone
-  ].items.push(id);
 }
 
-export function findItemsInRegion(
-  gs: GameState,
-  region: Region,
-  filterFn
-): Item[] {
-  const items: Item[] = [];
-  region.places.forEach((place) => {
-    place.zones.forEach((zone) => {
-      zone.items.forEach((item) => {
-        if (filterFn(gs.items[item])) {
-          items.push(gs.items[item]);
-        }
-      });
-    });
-  });
-  return items;
-}
-
-export function findItemsInPlace(
-  gs: GameState,
-  place: Place,
-  filterFn
-): Item[] {
-  const items: Item[] = [];
-  place.zones.forEach((zone) => {
-    zone.items.forEach((item) => {
-      if (filterFn(gs.items[item])) {
-        items.push(gs.items[item]);
-      }
-    });
-  });
-  return items;
-}
-
-export function findItemsInZone(gs: GameState, zone: Zone, filterFn): Item[] {
-  const items: Item[] = [];
-  zone.items.forEach((item) => {
-    if (filterFn(gs.items[item])) {
-      items.push(gs.items[item]);
-    }
-  });
-  return items;
-}
-
-export function findClosestItem(
-  gs: GameState,
-  position: Position,
-  filterFn
-): Item {
-  const zone = getZone(gs.world, position);
-  const inZone = findItemsInZone(gs, zone, filterFn);
-  if (inZone.length > 0) {
-    return inZone[0];
-  }
-  const place = getPlace(gs.world, position);
-  const inPlace = findItemsInPlace(gs, place, filterFn);
-  if (inPlace.length > 0) {
-    return inPlace[0];
-  }
-  const region = gs.world.regions[position.region];
-  const inRegion = findItemsInRegion(gs, region, filterFn);
-  if (inRegion.length > 0) {
-    return inRegion[0];
-  }
-  return null;
+export function findClosestItem(gs: GameState, pos: Pos, filterFn): Item {
+  // TODO
+  return gs.items[0];
 }
