@@ -5,7 +5,7 @@ import { handleKeyPress } from "./keybinds";
 import { Screen, FullState, SimSpeed } from "./ui/model";
 
 const defaultUiState = {
-  openScreen: Screen.Characters,
+  openScreen: Screen.World,
   screenParameters: null,
   simSpeed: SimSpeed.S0,
 };

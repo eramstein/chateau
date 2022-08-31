@@ -9,7 +9,7 @@ module.exports = {
     ecmaVersion: 13,
     sourceType: "module",
   },
-  plugins: ["prettier", "@typescript-eslint", "svelte3"],
+  plugins: ["prettier", "@typescript-eslint", "eslint-plugin-svelte3"],
   settings: {
     "svelte3/typescript": true,
   },

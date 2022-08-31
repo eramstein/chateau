@@ -11,6 +11,24 @@ export interface World {
 
 export interface Tile {
   pos: Pos;
+  terrain: TerrainType;
+  floor?: FloorType;
+  volume?: VolumeType;
+}
+
+export enum TerrainType {
+  Grass = "G",
+  Rock = "R",
+}
+
+export enum FloorType {
+  Wood = "W",
+  Stone = "S",
+}
+
+export enum VolumeType {
+  Earth = "E",
+  Stone = "S",
 }
 
 export interface Pos {
